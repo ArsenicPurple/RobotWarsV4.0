@@ -1,19 +1,23 @@
 package co.basin.BotAI;
 
-import co.basin.Bots.Ranger;
-import co.basin.Datatypes.RobotHitWallDirection;
-import co.basin.EntityManager;
-import co.basin.Datatypes.ScannedRobot;
+import co.basin.Bots.Rusher;
+import co.basin.Datatypes.Enums.RobotHitWallDirection;
+import co.basin.Managers.EntityManager;
+import co.basin.Datatypes.Pure.ScannedRobot;
+import co.basin.Managers.TournamentManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.Random;
 
-public final class ExampleBot extends Ranger {
-    public ExampleBot(float x, float y, EntityManager em, String name, int id, Color c) {
-        super(x, y, em, name, id, c);
+public final class ExampleBot extends Rusher {
+    public ExampleBot(float x, float y, TournamentManager tm, int id, Color c) { super(x, y, tm, id, c); }
+    public static ExampleBot init(float x, float y, TournamentManager tm, int id, Color c) { return new ExampleBot(x, y, tm, id, c); }
+
+    @Override
+    public String setName() {
+        return "NinjaBaby";
     }
-    public static ExampleBot init(float x, float y, EntityManager em, String name, int id, Color c) { return new ExampleBot(x, y, em, name, id, c); }
 
     enum State {
         SEARCHING,
@@ -57,22 +61,20 @@ public final class ExampleBot extends Ranger {
 
     @Override
     public void scannedRobot(ScannedRobot scannedRobot) {
-        System.out.println("Scanned Robot");
     }
 
     @Override
     public void gotHit() {
-        System.out.println("Got Hit");
+
     }
 
     @Override
     public void hitWall(RobotHitWallDirection direction) {
-        System.out.println("Hit Wall");
+
     }
 
     @Override
     public void bulletHitEnemy(ScannedRobot scannedRobot) {
-        System.out.println("Bullet Hit Enemy");
         lastPositionSeen = scannedRobot.position;
     }
 }

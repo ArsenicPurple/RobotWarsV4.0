@@ -1,16 +1,22 @@
 package co.basin.BotAI;
 
 import co.basin.Bots.Tactical;
-import co.basin.Datatypes.RobotHitWallDirection;
-import co.basin.Datatypes.ScannedRobot;
-import co.basin.EntityManager;
+import co.basin.Datatypes.Enums.RobotHitWallDirection;
+import co.basin.Datatypes.Pure.ScannedRobot;
+import co.basin.Managers.EntityManager;
+import co.basin.Managers.TournamentManager;
 import com.badlogic.gdx.graphics.Color;
 
 public class SoldierBot extends Tactical {
-    public SoldierBot(float x, float y, EntityManager em, String name, int id, Color c) { super(x, y, em, name, id, c); }
-    public static SoldierBot init(float x, float y, EntityManager em, String name, int id, Color c) { return new SoldierBot(x, y, em, name, id, c); }
+    public SoldierBot(float x, float y, TournamentManager tm, int id, Color c) { super(x, y, tm, id, c); }
+    public static SoldierBot init(float x, float y, TournamentManager tm, int id, Color c) { return new SoldierBot(x, y, tm, id, c); }
 
     boolean started = true;
+
+    @Override
+    public String setName() {
+        return "SugSugAwesome";
+    }
 
     @Override
     public void run() {

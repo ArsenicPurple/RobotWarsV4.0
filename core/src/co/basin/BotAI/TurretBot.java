@@ -1,17 +1,26 @@
 package co.basin.BotAI;
 
-import co.basin.Bots.Rusher;
-import co.basin.Bots.Tank;
-import co.basin.Datatypes.RobotHitWallDirection;
-import co.basin.Datatypes.ScannedRobot;
-import co.basin.EntityManager;
+import co.basin.Bots.Ranger;
+import co.basin.Datatypes.Entities.Robot;
+import co.basin.Datatypes.Enums.RobotHitWallDirection;
+import co.basin.Datatypes.Pure.ScannedRobot;
+import co.basin.Managers.TournamentManager;
 import com.badlogic.gdx.graphics.Color;
 
-public class TurretBot extends Rusher {
-    public TurretBot(float x, float y, EntityManager em, String name, int id, Color c) { super(x, y, em, name, id, c); }
-    public static TurretBot init(float x, float y, EntityManager em, String name, int id, Color c) { return new TurretBot(x, y, em, name, id, c); }
+import java.util.Random;
+
+public class TurretBot extends Ranger {
+    public TurretBot(float x, float y, TournamentManager tm, int id, Color c) { super(x, y, tm, id, c); }
+    public static Robot init(float x, float y, TournamentManager tm, int id, Color c) { return new TurretBot(x, y, tm, id, c); }
 
     boolean started = true;
+
+    Random rand = new Random();
+
+    @Override
+    public String setName() {
+        return "BallsMcJawls";
+    }
 
     @Override
     public void run() {
@@ -20,7 +29,7 @@ public class TurretBot extends Rusher {
             started = false;
         }
 
-        turnWeaponRight(5);
+        turnWeaponRight(rand.nextInt(5));
         shoot();
     }
 

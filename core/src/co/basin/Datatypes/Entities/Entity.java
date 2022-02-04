@@ -1,4 +1,4 @@
-package co.basin;
+package co.basin.Datatypes.Entities;
 
 import space.earlygrey.shapedrawer.ShapeDrawer;
 

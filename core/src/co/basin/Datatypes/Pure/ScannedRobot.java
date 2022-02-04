@@ -1,7 +1,7 @@
-package co.basin.Datatypes;
+package co.basin.Datatypes.Pure;
 
-import co.basin.Datatypes.RobotType;
-import co.basin.Robot;
+import co.basin.Datatypes.Entities.Robot;
+import co.basin.Datatypes.Enums.RobotType;
 import com.badlogic.gdx.math.Vector2;
 
 public class ScannedRobot {
@@ -12,6 +12,6 @@ public class ScannedRobot {
     public ScannedRobot(Robot robot) {
         this.position = robot.getPosition();
         this.health = robot.getHealth();
-        this.type = robot.type;
+        this.type = robot.getType();
     }
 }

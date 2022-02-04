@@ -1,8 +1,9 @@
 package co.basin;
 
-import co.basin.Datatypes.Scanner;
-import co.basin.Datatypes.RobotHitWallDirection;
-import co.basin.Datatypes.RobotType;
+import co.basin.Datatypes.Pure.Scanner;
+import co.basin.Datatypes.Enums.RobotHitWallDirection;
+import co.basin.Datatypes.Enums.RobotType;
+import co.basin.Datatypes.Pure.Settings;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
@@ -11,9 +12,14 @@ import com.badlogic.gdx.math.Vector2;
 public class Constants {
     public static final String[] robots = {
             "ExampleBot",
-            "TurretBot",
+            "ExampleBot",
             "SoldierBot",
+            "SoldierBot",
+            "TurretBot",
     };
+
+    public static final boolean isTournament = false;
+    public static final int roundsPerMatch = 3;
 
     /**
      *
@@ -164,26 +170,6 @@ public class Constants {
     }
 
     private static Scanner createRusherScanner(Vector2 center) {
-        return new Scanner(center, 100f, 180f);
-    }
-}
-
-class Settings {
-    public final float bulletSpeed;
-    public final float turnSpeed;
-    public final float fireRate;
-    public final float speed;
-    public final int falloff;
-    public final int health;
-    public final int damage;
-
-    public Settings(float bulletSpeed, float turnSpeed, float fireRate, float speed, int falloff, int health, int damage) {
-        this.bulletSpeed = bulletSpeed;
-        this.turnSpeed = turnSpeed;
-        this.fireRate = fireRate;
-        this.speed = speed;
-        this.falloff = falloff;
-        this.health = health;
-        this.damage = damage;
+        return new Scanner(center, 100f);
     }
 }

@@ -1,16 +1,17 @@
 package co.basin.Bots;
 
 import co.basin.Constants;
-import co.basin.Datatypes.RobotHitWallDirection;
-import co.basin.Datatypes.RobotType;
-import co.basin.EntityManager;
-import co.basin.Robot;
-import co.basin.Datatypes.ScannedRobot;
+import co.basin.Datatypes.Enums.RobotHitWallDirection;
+import co.basin.Datatypes.Enums.RobotType;
+import co.basin.Managers.EntityManager;
+import co.basin.Datatypes.Entities.Robot;
+import co.basin.Datatypes.Pure.ScannedRobot;
+import co.basin.Managers.TournamentManager;
 import com.badlogic.gdx.graphics.Color;
 
 public abstract class Tactical extends Robot {
-    public Tactical(float x, float y, EntityManager em, String name, int id, Color c) {
-        super(x, y, Constants.Tactical, RobotType.TACTICAL, em, name, id, c);
+    public Tactical(float x, float y, TournamentManager tm, int id, Color c) {
+        super(x, y, Constants.Tactical, RobotType.TACTICAL, tm, id, c);
     }
 
     public abstract void run();

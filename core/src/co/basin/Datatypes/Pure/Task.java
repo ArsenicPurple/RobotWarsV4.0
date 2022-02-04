@@ -1,4 +1,6 @@
-package co.basin;
+package co.basin.Datatypes.Pure;
+
+import co.basin.Datatypes.Entities.Robot;
 
 import java.util.function.Predicate;
 

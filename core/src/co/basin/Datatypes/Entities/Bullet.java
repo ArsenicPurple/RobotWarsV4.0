@@ -1,16 +1,13 @@
-package co.basin;
+package co.basin.Datatypes.Entities;
 
-import co.basin.Datatypes.ScannedRobot;
-import com.badlogic.gdx.Gdx;
+import co.basin.Constants;
+import co.basin.Datatypes.Pure.ScannedRobot;
+import co.basin.Managers.EntityManager;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.TimeUtils;
 import space.earlygrey.shapedrawer.ShapeDrawer;
-
-import javax.swing.*;
 
 public class Bullet extends Entity {
     private final Vector2 position;

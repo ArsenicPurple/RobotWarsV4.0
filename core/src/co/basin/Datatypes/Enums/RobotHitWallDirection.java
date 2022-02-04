@@ -1,4 +1,4 @@
-package co.basin.Datatypes;
+package co.basin.Datatypes.Enums;
 
 public enum RobotHitWallDirection {
     NORTH,

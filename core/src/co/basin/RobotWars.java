@@ -1,13 +1,9 @@
 package co.basin;
 
+import co.basin.Datatypes.Entities.Robot;
+import co.basin.Managers.TournamentManager;
 import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.LifecycleListener;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -16,8 +12,6 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Random;
@@ -49,65 +43,10 @@ public class RobotWars extends ApplicationAdapter {
 	ShapeDrawer drawer;
 	SpriteBatch batch;
 
-	private GUI gui;
-	private EntityManager em = new EntityManager();
+	private TournamentManager tm = new TournamentManager();
 
 	@Override
 	public void create () {
-//		Gdx.app.getInput().setInputProcessor(new InputProcessor() {
-//			@Override
-//			public boolean keyDown(int keycode) {
-//				return false;
-//			}
-//
-//			@Override
-//			public boolean keyUp(int keycode) {
-//				return false;
-//			}
-//
-//			@Override
-//			public boolean keyTyped(char character) {
-//				return false;
-//			}
-//
-//			@Override
-//			public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-//				float min = Integer.MAX_VALUE;
-//				Robot r = null;
-//				for (Robot robot : em.getRobots()) {
-//					float dst = robot.getPosition().dst(screenX, screenY);
-//					if (dst < min) {
-//						min = dst;
-//						r = robot;
-//					}
-//				}
-//				if (r != null) {
-//					System.out.println(r.name);
-//					System.out.println(r.getScanner().contains(screenX, screenY));;
-//				}
-//				return false;
-//			}
-//
-//			@Override
-//			public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-//				return false;
-//			}
-//
-//			@Override
-//			public boolean touchDragged(int screenX, int screenY, int pointer) {
-//				return false;
-//			}
-//
-//			@Override
-//			public boolean mouseMoved(int screenX, int screenY) {
-//				return false;
-//			}
-//
-//			@Override
-//			public boolean scrolled(float amountX, float amountY) {
-//				return false;
-//			}
-//		});
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 900, 900);
 		viewport = new FitViewport(900, 900, camera);
@@ -125,32 +64,43 @@ public class RobotWars extends ApplicationAdapter {
 			String className = "co.basin.BotAI." + Constants.robots[i];
 			try {
 				Random rand = new Random();
-				Method method = Class.forName(className).getMethod("init", float.class, float.class, EntityManager.class, String.class, int.class, Color.class);
-				startingRobots[i] = (Robot) method.invoke(null, rand.nextInt(900), rand.nextInt(900), em, Constants.robots[i], i, Constants.colors[i % 9]);
+				Method method = Class.forName(className).getMethod("init", float.class, float.class, TournamentManager.class, int.class, Color.class);
+				startingRobots[i] = (Robot) method.invoke(null, rand.nextInt(900), rand.nextInt(900), tm, i, Constants.colors[i % 9]);
 			} catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
 				System.out.println("Error Initializing Robot of Class: " + Constants.robots[i]);
 				e.printStackTrace();
 			}
 		}
-		gui = new GUI(em, batch);
-		em.init(startingRobots);
+
+		try {
+			tm.init(startingRobots, batch);
+		} catch (Exception e) {
+			System.out.println("error initializing tm");
+			e.printStackTrace();
+		}
 	}
 
 	public void update() {
-		em.update();
-		em.finish();
+		tm.update();
 	}
 
-	@Override
-	public void render () {
-		update();
-		ScreenUtils.clear(Constants.darkGray3);
+	private void begin() {
 		batch.setTransformMatrix(camera.view);
 		batch.setProjectionMatrix(camera.projection);
 		batch.begin();
-		em.render(drawer);
-		gui.render(drawer);
+	}
+
+	private void end() {
 		batch.end();
+	}
+
+	@Override
+	public void render() {
+		update();
+		ScreenUtils.clear(Constants.darkGray3);
+		begin();
+		tm.render(drawer);
+		end();
 	}
 
 	@Override
@@ -159,7 +109,6 @@ public class RobotWars extends ApplicationAdapter {
 		viewport.update(width, height);
 		camera.update();
 	}
-
 
 	@Override
 	public void dispose () {
